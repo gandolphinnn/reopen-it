@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "reopen-it.helloWorld",
-        "title": "Hello World"
+        "command": "reopen-it.showOpenTabs",
+        "title": "Show Open Tabs"
       }
     ]
   },
