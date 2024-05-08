@@ -2,14 +2,16 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 
 /**
-	{
-		"favorites": [
-			"C:\\Users\\user\\Documents\\workspace1\\project1",
-			"C:\\Users\\user\\Documents\\workspace2\\project1",
-			"C:\\Users\\user\\Documents\\workspace2\\project2"
-		],
-		"savedWorkspaces": [
-			"workspace1": [
+{
+	"favorites": [
+		"C:\\Users\\user\\Documents\\workspace1\\project1",
+		"C:\\Users\\user\\Documents\\workspace2\\project1",
+		"C:\\Users\\user\\Documents\\workspace2\\project2"
+	],
+	"savedWorkspaces": [
+		{
+			"name": "workspace1",
+			"tabs": [
 				{
 					"path": "C:\\Users\\user\\Documents\\workspace1\\project1",
 					"pinned": true
@@ -19,8 +21,9 @@ import * as fs from 'fs';
 					"pinned": false
 				}
 			]
-		]
-	}
+		}
+	]
+}
  */
 export type WorkspaceFile = { path: string, pinned: boolean };
 export type Workspace = WorkspaceFile[];
