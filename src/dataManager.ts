@@ -68,4 +68,9 @@ export class DataManager {
 	public writeData() {
 		fs.writeFileSync(this.storagePath, this.stringify);
 	}
+
+	public addFavourite(path: string) {
+		this.favorites.push(path);
+		this.writeData();
+	}
 }

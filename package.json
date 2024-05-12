@@ -16,6 +16,10 @@
       {
         "command": "reopen-it.showOpenTabs",
         "title": "Show Open Tabs"
+      },
+      {
+        "command": "reopen-it.addFavourite",
+        "title": "Add to favorites"
       }
     ]
   },
