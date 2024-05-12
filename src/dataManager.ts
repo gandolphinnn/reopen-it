@@ -21,12 +21,13 @@ import * as fs from 'fs';
 					"pinned": false
 				}
 			]
+			"folder": "C:\\Users\\user\\Documents\\workspace1"
 		}
 	]
 }
  */
 export type WorkspaceFile = { path: string, pinned: boolean };
-export type Workspace = WorkspaceFile[];
+export type Workspace = { name: string, tabs: WorkspaceFile[], folder: string };
 
 export class DataManager {
 
@@ -34,6 +35,10 @@ export class DataManager {
 
 	public favorites: string[] = [];
 	public savedWorkspaces: Workspace[] = [];
+
+	public get stringify() {
+		return JSON.stringify({ favorites: this.favorites, savedWorkspaces: this.savedWorkspaces });
+	}
 
 	constructor(context: vscode.ExtensionContext) {
 		this.storagePath = context.globalStorageUri.fsPath;
@@ -45,8 +50,14 @@ export class DataManager {
 		this.storagePath = `${this.storagePath}/data.json`;
 
 		// Create the storage file if it doesn't exist
-		fs.existsSync(this.storagePath) || fs.writeFileSync(this.storagePath, JSON.stringify({}));
+		if (fs.existsSync(this.storagePath)) {
+			this.readData();
+		}
+		else {
+			fs.writeFileSync(this.storagePath, this.stringify);
+		}
 	}
+
 	public readData() {
 		const data = fs.readFileSync(this.storagePath);
 		const parsedData = JSON.parse(data.toString());
@@ -54,7 +65,7 @@ export class DataManager {
 		this.savedWorkspaces = parsedData.savedWorkspaces;
 	}
 
-	public writeDate() {
-		fs.writeFileSync(this.storagePath, JSON.stringify({ favorites: this.favorites, savedWorkspaces: this.savedWorkspaces }));
+	public writeData() {
+		fs.writeFileSync(this.storagePath, this.stringify);
 	}
 }
