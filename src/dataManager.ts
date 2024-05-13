@@ -8,7 +8,7 @@ import * as fs from 'fs';
 		"C:\\Users\\user\\Documents\\workspace2\\project1",
 		"C:\\Users\\user\\Documents\\workspace2\\project2"
 	],
-	"savedWorkspaces": [
+	"workspaces": [
 		{
 			"name": "workspace1",
 			"tabs": [
@@ -34,10 +34,10 @@ export class DataManager {
 	readonly storagePath: string;
 
 	favorites: string[] = [];
-	savedWorkspaces: Workspace[] = [];
+	workspaces: Workspace[] = [];
 
 	get stringify() {
-		return JSON.stringify({ favorites: this.favorites, savedWorkspaces: this.savedWorkspaces });
+		return JSON.stringify({ favorites: this.favorites, workspaces: this.workspaces });
 	}
 
 	constructor(context: vscode.ExtensionContext) {
@@ -62,7 +62,7 @@ export class DataManager {
 		const data = fs.readFileSync(this.storagePath);
 		const parsedData = JSON.parse(data.toString());
 		this.favorites = parsedData.favorites;
-		this.savedWorkspaces = parsedData.savedWorkspaces;
+		this.workspaces = parsedData.workspaces;
 	}
 
 	writeData() {

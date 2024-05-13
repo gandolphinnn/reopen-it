@@ -3,30 +3,30 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { DataManager } from './dataManager';
 
-export class ReopenItProvider implements vscode.TreeDataProvider<ReopenIt> {
+export class WorkspacesProvider implements vscode.TreeDataProvider<Workspace> {
 	constructor(private dataManager: DataManager) {}
 
-	getTreeItem(element: ReopenIt): vscode.TreeItem {
+	getTreeItem(element: Workspace): vscode.TreeItem {
 		return element;
 	}
 
-	getChildren(element?: ReopenIt): Thenable<ReopenIt[]> {
+	getChildren(element?: Workspace): Thenable<Workspace[]> {
 
 		if (element === undefined) {
-			return Promise.resolve([new ReopenIt("Favourites", vscode.TreeItemCollapsibleState.Expanded)]);
+			return Promise.resolve([new Workspace("Favourites", vscode.TreeItemCollapsibleState.Expanded)]);
 		}
 
 		const favorites = this.dataManager.favorites;
 
 		return Promise.resolve(
 			favorites.map(favorite => {
-				return new ReopenIt(favorite, vscode.TreeItemCollapsibleState.None);
+				return new Workspace(favorite, vscode.TreeItemCollapsibleState.None);
 			})
 		);
 	}
 }
 
-class ReopenIt extends vscode.TreeItem {
+class Workspace extends vscode.TreeItem {
 	name: string;
 
 	get exists() {

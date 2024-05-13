@@ -17,7 +17,7 @@
 				{
 				"id": "reopenIt",
 				"title": "Reopen It",
-				"icon": "media/dep.svg"
+				"icon": "resources/icon.svg"
 				}
 			]
 		},
@@ -59,9 +59,9 @@
 			],
 			"view/item/context": [
 				{
-					"command": "reopen-it.openFavourite",
-					"title": "Open file",
-					"when": "view == reopen-it"
+					"command": "reopen-it.copyPath",
+					"title": "Copy file path",
+					"when": "view == reopenIt-favourites"
 				}
 			]
 		}
