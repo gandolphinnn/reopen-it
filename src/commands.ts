@@ -11,9 +11,13 @@ export class CommandManager {
 		vscode.window.showInformationMessage(`Open tabs: ${titledDocs.map(doc => doc.fileName).join('\n')}`);
 	};
 	
-	static toggleFavourite: CommandCallback = () => {
-		const docPath = vscode.window.activeTextEditor!.document.fileName;
-		vscode.window.showInformationMessage(`Add/remove ${docPath} to favourites`);
-		this.dataManager.toggleFavourite(docPath);
+	static addFavourite: CommandCallback = (docPath = vscode.window.activeTextEditor!.document.fileName) => {
+		vscode.window.showInformationMessage(`Add ${docPath} to favourites`);
+		this.dataManager.addFavourite(docPath);
+	};
+
+	static removeFavourite: CommandCallback = (docPath = vscode.window.activeTextEditor!.document.fileName) => {
+		vscode.window.showInformationMessage(`Remove ${docPath} from favourites`);
+		this.dataManager.removeFavourite(docPath);
 	};
 }

@@ -12,11 +12,24 @@
 	"activationEvents": [],
 	"main": "./out/extension.js",
 	"contributes": {
-	"views": {
-		"explorer": [
+		"viewsContainers": {
+			"activitybar": [
 				{
-					"id": "reopenIt",
-					"name": "Reopen It"
+				"id": "reopenIt",
+				"title": "Reopen It",
+				"icon": "media/dep.svg"
+				}
+			]
+		},
+		"views": {
+			"reopenIt": [
+				{
+					"id": "reopenIt-favourites",
+					"name": "Favourites"
+				},
+				{
+					"id": "reopenIt-workspaces",
+					"name": "Workspaces"
 				}
 			]
 		},
@@ -24,12 +37,34 @@
 			{
 				"command": "reopen-it.showOpenTabs",
 				"title": "Show Open Tabs"
-			},
-			{
-				"command": "reopen-it.toggleFavourite",
-				"title": "Add/remove to favorites"
 			}
-		]
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"command": "reopen-it.addFavourite",
+					"title": "Add to favourites"
+				},
+				{
+					"command": "reopen-it.removeFavourite",
+					"title": "Remove from favourites"
+				}
+			],
+			"view/title": [
+				{
+					"command": "nodeDependencies.refreshEntry",
+					"when": "view == nodeDependencies",
+					"group": "navigation"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "reopen-it.openFavourite",
+					"title": "Open file",
+					"when": "view == reopen-it"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",

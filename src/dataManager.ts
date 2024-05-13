@@ -69,14 +69,21 @@ export class DataManager {
 		fs.writeFileSync(this.storagePath, this.stringify);
 	}
 
-	toggleFavourite(path: string) {
+	addFavourite(path: string) {
 		const index = this.favorites.indexOf(path);
-		if (index === -1) {
-			this.favorites.push(path);
-		}
-		else {
-			this.favorites.splice(-1, 1);
-		}
+	
+		if (index !== -1) { throw new Error(); }
+
+		this.favorites.push(path);
+		this.writeData();
+	}
+	
+	removeFavourite(path: string) {
+		const index = this.favorites.indexOf(path);
+
+		if (index === -1) { throw new Error(); }
+
+		this.favorites.splice(index, 1);
 		this.writeData();
 	}
 }
