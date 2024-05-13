@@ -31,12 +31,12 @@ export type Workspace = { name: string, tabs: WorkspaceFile[], folder: string };
 
 export class DataManager {
 
-	public readonly storagePath: string;
+	readonly storagePath: string;
 
-	public favorites: string[] = [];
-	public savedWorkspaces: Workspace[] = [];
+	favorites: string[] = [];
+	savedWorkspaces: Workspace[] = [];
 
-	public get stringify() {
+	get stringify() {
 		return JSON.stringify({ favorites: this.favorites, savedWorkspaces: this.savedWorkspaces });
 	}
 
@@ -58,19 +58,25 @@ export class DataManager {
 		}
 	}
 
-	public readData() {
+	readData() {
 		const data = fs.readFileSync(this.storagePath);
 		const parsedData = JSON.parse(data.toString());
 		this.favorites = parsedData.favorites;
 		this.savedWorkspaces = parsedData.savedWorkspaces;
 	}
 
-	public writeData() {
+	writeData() {
 		fs.writeFileSync(this.storagePath, this.stringify);
 	}
 
-	public addFavourite(path: string) {
-		this.favorites.push(path);
+	toggleFavourite(path: string) {
+		const index = this.favorites.indexOf(path);
+		if (index === -1) {
+			this.favorites.push(path);
+		}
+		else {
+			this.favorites.splice(-1, 1);
+		}
 		this.writeData();
 	}
 }

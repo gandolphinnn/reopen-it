@@ -11,9 +11,9 @@ export class CommandManager {
 		vscode.window.showInformationMessage(`Open tabs: ${titledDocs.map(doc => doc.fileName).join('\n')}`);
 	};
 	
-	static addFavourite: CommandCallback = () => {
+	static toggleFavourite: CommandCallback = () => {
 		const docPath = vscode.window.activeTextEditor!.document.fileName;
-		vscode.window.showInformationMessage(`Add ${docPath} to favourites`);
-		this.dataManager.addFavourite(docPath);
+		vscode.window.showInformationMessage(`Add/remove ${docPath} to favourites`);
+		this.dataManager.toggleFavourite(docPath);
 	};
 }
