@@ -1,20 +1,12 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 
-
-/* const jsonData = {
+/**
+{
 	"favorites": [
-		{
-			path: "C:\\Users\\user\\Documents\\workspace1\\project1"
-		},
-		{
-			path: "C:\\Users\\user\\Documents\\workspace2\\project1",
-			group: "group1"
-		},
-		{
-			path: "C:\\Users\\user\\Documents\\workspace2\\project2",
-			group: "group1"
-		}
+		"C:\\Users\\user\\Documents\\workspace1\\project1",
+		"C:\\Users\\user\\Documents\\workspace2\\project1",
+		"C:\\Users\\user\\Documents\\workspace2\\project2"
 	],
 	"workspaces": [
 		{
@@ -28,12 +20,12 @@ import * as fs from 'fs';
 					"path": "C:\\Users\\user\\Documents\\workspace1\\project2",
 					"pinned": false
 				}
-			],
+			]
 			"folder": "C:\\Users\\user\\Documents\\workspace1"
 		}
 	]
-} */
-export type Favourite = { path: string, group?: string }; // NO group = "Favourites"
+}
+ */
 export type WorkspaceFile = { path: string, pinned: boolean };
 export type Workspace = { name: string, tabs: WorkspaceFile[], folder: string };
 
@@ -41,7 +33,7 @@ export class DataManager {
 
 	readonly storagePath: string;
 
-	favorites: string[] = []; //TODO change to Favourite[]
+	favorites: string[] = [];
 	workspaces: Workspace[] = [];
 
 	get stringify() {
