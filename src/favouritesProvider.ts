@@ -12,9 +12,9 @@ export class FavouritesProvider implements vscode.TreeDataProvider<Favourite> {
 
 	getChildren(element?: Favourite): Thenable<Favourite[]> {
 
-		if (element === undefined) {
+		/* if (element === undefined) {
 			return Promise.resolve([new Favourite(false, "Favourites", vscode.TreeItemCollapsibleState.Expanded)]);
-		}
+		} */
 
 		const favorites = this.dataManager.favorites;
 

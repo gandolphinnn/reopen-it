@@ -65,25 +65,31 @@ export class DataManager {
 		this.workspaces = parsedData.workspaces;
 	}
 
-	writeData() {
+	save() {
 		fs.writeFileSync(this.storagePath, this.stringify);
 	}
 
 	addFavourite(path: string) {
 		const index = this.favorites.indexOf(path);
 	
-		if (index !== -1) { throw new Error(); }
+		if (index !== -1) {
+			return false;
+		}
 
 		this.favorites.push(path);
-		this.writeData();
+		this.save();
+		return true;
 	}
 	
 	removeFavourite(path: string) {
 		const index = this.favorites.indexOf(path);
 
-		if (index === -1) { throw new Error(); }
+		if (index === -1) {
+			return false;
+		}
 
 		this.favorites.splice(index, 1);
-		this.writeData();
+		this.save();
+		return true;
 	}
 }
