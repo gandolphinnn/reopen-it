@@ -69,32 +69,6 @@
 					"name": "Workspaces"
 				}
 			]
-		},
-		"menus": {
-			"editor/context": [
-				{
-					"command": "reopen-it.addFavourite",
-					"title": "Add to favourites"
-				},
-				{
-					"command": "reopen-it.removeFavourite",
-					"title": "Remove from favourites"
-				}
-			],
-			"view/title": [
-				{
-					"command": "nodeDependencies.refreshEntry",
-					"when": "view == nodeDependencies",
-					"group": "navigation"
-				}
-			],
-			"view/item/context": [
-				{
-					"command": "reopen-it.copyPath",
-					"title": "Copy file path",
-					"when": "view == reopenIt-favourites"
-				}
-			]
 		}
 	},
 	"scripts": {

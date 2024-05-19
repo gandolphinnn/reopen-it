@@ -31,7 +31,6 @@ export type Workspace = { name: string, tabs: WorkspaceFile[], folder: string };
 
 export class DataManager {
 
-	readonly storagePath: string;
 
 	favorites: string[] = [];
 	workspaces: Workspace[] = [];
@@ -40,14 +39,13 @@ export class DataManager {
 		return JSON.stringify({ favorites: this.favorites, workspaces: this.workspaces });
 	}
 
-	constructor(context: vscode.ExtensionContext) {
-		this.storagePath = context.globalStorageUri.fsPath;
+	constructor(public readonly storagePath: string) {
 
 		// Create the storage directory if it doesn't exist
 		fs.existsSync(this.storagePath) || fs.mkdirSync(this.storagePath, { recursive: true });
 		
 		// Append the filename to the path
-		this.storagePath = `${this.storagePath}/data.json`;
+		this.storagePath = `${this.storagePath}\\data.json`;
 
 		// Create the storage file if it doesn't exist
 		if (fs.existsSync(this.storagePath)) {
@@ -55,12 +53,14 @@ export class DataManager {
 		}
 		else {
 			fs.writeFileSync(this.storagePath, this.stringify);
+			console.log(`Created data file at ${this.storagePath}`);
 		}
 	}
-
-	readData() {
+	
+	private readData() {
 		const data = fs.readFileSync(this.storagePath);
 		const parsedData = JSON.parse(data.toString());
+		console.log(`Read ${parsedData} from ${this.storagePath}`);
 		this.favorites = parsedData.favorites;
 		this.workspaces = parsedData.workspaces;
 	}
