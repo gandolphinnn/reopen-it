@@ -1,44 +1,75 @@
 {
 	"name": "reopen-it",
+	"publisher": "gandolphinnn",
 	"displayName": "Reopen It",
+	"icon": "resources/icon.png",
 	"description": "",
 	"version": "0.0.1",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/gandolphinnn/reopen-it"
+	},
 	"engines": {
 		"vscode": "^1.89.0"
 	},
 	"categories": [
 		"Other"
 	],
-	"activationEvents": [],
+	"activationEvents": [
+		"onView:reopenIt-tree"
+	],
 	"main": "./out/extension.js",
 	"contributes": {
+		"commands": [
+			{
+				"command": "reopen-it.toggleFavourite",
+				"category": "ReopenIt",
+				"title": "Add/remove from favourites"
+			},
+			{
+				"command": "reopen-it.saveWorkspace",
+				"category": "ReopenIt",
+				"title": "Save workspace"
+			},
+			{
+				"command": "reopen-it.saveWorkspaceAs",
+				"category": "ReopenIt",
+				"title": "Save workspace as"
+			},
+			{
+				"command": "reopen-it.saveCloseWorkspace",
+				"category": "ReopenIt",
+				"title": "Save and close workspace"
+			},
+			{
+				"command": "reopen-it.openWorkspace",
+				"category": "ReopenIt",
+				"title": "Open workspace"
+			}
+		],
 		"viewsContainers": {
 			"activitybar": [
 				{
-				"id": "reopenIt",
+				"id": "reopenIt-tree",
 				"title": "Reopen It",
 				"icon": "resources/icon.svg"
 				}
 			]
 		},
 		"views": {
-			"reopenIt": [
+			"reopenIt-tree": [
 				{
+					"type": "tree",
 					"id": "reopenIt-favourites",
 					"name": "Favourites"
 				},
 				{
+					"type": "tree",
 					"id": "reopenIt-workspaces",
 					"name": "Workspaces"
 				}
 			]
 		},
-		"commands": [
-			{
-				"command": "reopen-it.showOpenTabs",
-				"title": "Show Open Tabs"
-			}
-		],
 		"menus": {
 			"editor/context": [
 				{
