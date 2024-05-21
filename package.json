@@ -15,35 +15,33 @@
 	"categories": [
 		"Other"
 	],
-	"activationEvents": [
-		"onView:reopenIt-tree"
-	],
+	"activationEvents": [],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "reopen-it.toggleFavourite",
-				"category": "ReopenIt",
+				"category": "Reopen It",
 				"title": "Add/remove from favourites"
 			},
 			{
 				"command": "reopen-it.saveWorkspace",
-				"category": "ReopenIt",
+				"category": "Reopen It",
 				"title": "Save workspace"
 			},
 			{
 				"command": "reopen-it.saveWorkspaceAs",
-				"category": "ReopenIt",
+				"category": "Reopen It",
 				"title": "Save workspace as"
 			},
 			{
 				"command": "reopen-it.saveCloseWorkspace",
-				"category": "ReopenIt",
+				"category": "Reopen It",
 				"title": "Save and close workspace"
 			},
 			{
 				"command": "reopen-it.openWorkspace",
-				"category": "ReopenIt",
+				"category": "Reopen It",
 				"title": "Open workspace"
 			}
 		],

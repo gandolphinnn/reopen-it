@@ -68,10 +68,13 @@ export class CommandManager {
 		this.dataManager.removeFavourite(docPath) && vscode.window.showInformationMessage(`Remove ${docPath} from favourites`);
 	};
 	//
-	static saveWorkspace: CommandCallback = () => {
+	static saveWorkspace: CommandCallback = (workspaceName: string = "") => {
 		const titledDocs = vscode.workspace.textDocuments.filter(doc => !doc.isUntitled);
+		if (workspaceName === "") {
+			workspaceName = "workspace1"; //WIP, will be incremental
+		}
 		this.dataManager.workspaces.push({
-			name: "workspace1", //WIP
+			name: workspaceName,
 			tabs: titledDocs.map(doc => ({
 				path: doc.fileName,
 				pinned: true //TODO how to get this data
@@ -80,12 +83,30 @@ export class CommandManager {
 		});
 	};
 	static saveWorkspaceAs: CommandCallback = () => {
-		//TODO
-	}
+		vscode.window.showInputBox( { prompt: "Workspace name"} ).then( workspaceName => this.saveWorkspace(workspaceName));
+	};
 	static saveCloseWorkspace: CommandCallback = () => {
-		//TODO
-	}
-	static openWorkspace: CommandCallback = () => {
-		//TODO
-	}
+		this.saveWorkspace();
+		vscode.commands.executeCommand("workbench.action.closeAllEditors"); //TODO check if this works
+	};
+	static openWorkspace: CommandCallback = (workspaceName: string = "") => { //TODO check if this works
+		const openWorkspaceCB = (workspaceName: string) => {
+			const workspace = this.dataManager.workspaces.find(w => w.name === workspaceName);
+			if (workspace) {
+				workspace.tabs.forEach(tab => {
+					vscode.workspace.openTextDocument(tab.path).then(doc => vscode.window.showTextDocument(doc));
+				});
+			}
+			else {
+				vscode.window.showErrorMessage(`Workspace ${workspaceName} not found`);
+			}
+		};
+		if (workspaceName === "") {
+			const options: vscode.QuickPickOptions = { matchOnDetail: true, matchOnDescription: true, canPickMany: false, placeHolder: "Select tags to remove" };
+			vscode.window.showQuickPick(this.dataManager.workspaces.map(w => w.name), options).then(workspaceName => openWorkspaceCB(workspaceName || ""));
+		}
+		else {
+			openWorkspaceCB(workspaceName);
+		}
+	};
 }
