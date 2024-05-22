@@ -4,7 +4,14 @@ import * as path from 'path';
 import { DataManager } from './dataManager';
 
 export class FavouritesProvider implements vscode.TreeDataProvider<Favourite> {
+	private _onDidChangeTreeData = new vscode.EventEmitter<Favourite | undefined | null | void>();
+	readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
+
 	constructor(private dataManager: DataManager) {}
+	
+	refresh(): void {
+		this._onDidChangeTreeData.fire();
+	}
 
 	getTreeItem(element: Favourite): vscode.TreeItem {
 		return element;

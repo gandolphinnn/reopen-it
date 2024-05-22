@@ -18,8 +18,8 @@ export type CommandCallback = (...args: any[]) => any;
 		],
 		"view/title": [
 			{
-				"command": "nodeDependencies.refreshEntry",
-				"when": "view == nodeDependencies",
+				"command": "reopen-it.refreshEntry",
+				"when": "view == reopen-it",
 				"group": "navigation"
 			}
 		],

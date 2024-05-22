@@ -20,13 +20,14 @@ export function activate(context: vscode.ExtensionContext) {
 
 	//TODO fix the "auto-launch commands" bug
 	context.subscriptions.push(
-		vscode.commands.registerCommand('reopen-it.toggleFavourite',	CommandManager.toggleFavourite()),
-		//vscode.commands.registerCommand('reopen-it.addFavourite',		CommandManager.addFavourite()),
-		//vscode.commands.registerCommand('reopen-it.removeFavourite',	CommandManager.removeFavourite()),
-		vscode.commands.registerCommand('reopen-it.saveWorkspace',		CommandManager.saveWorkspace()),
-		vscode.commands.registerCommand('reopen-it.saveWorkspaceAs',	CommandManager.saveWorkspaceAs()),
-		vscode.commands.registerCommand('reopen-it.saveCloseWorkspace',	CommandManager.saveCloseWorkspace()),
-		vscode.commands.registerCommand('reopen-it.openWorkspace',		CommandManager.openWorkspace()),
+		vscode.commands.registerCommand('reopen-it.toggleFavourite',	CommandManager.toggleFavourite),
+		//vscode.commands.registerCommand('reopen-it.addFavourite',		CommandManager.addFavourite),
+		//vscode.commands.registerCommand('reopen-it.removeFavourite',	CommandManager.removeFavourite),
+		//vscode.commands.registerCommand('reopen-it.saveWorkspace',		CommandManager.saveWorkspace),
+		//vscode.commands.registerCommand('reopen-it.saveWorkspaceAs',	CommandManager.saveWorkspaceAs),
+		//vscode.commands.registerCommand('reopen-it.saveCloseWorkspace',	CommandManager.saveCloseWorkspace),
+		//vscode.commands.registerCommand('reopen-it.openWorkspace',		CommandManager.openWorkspace),
+		vscode.commands.registerCommand('reopen-it.refreshTree',		() => { favouritesProvider.refresh(); workspacesProvider.refresh(); }),
 	);
 }
 

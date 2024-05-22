@@ -31,12 +31,26 @@ export type Workspace = { name: string, tabs: WorkspaceFile[], folder: string };
 
 export class DataManager {
 
-
 	favorites: string[] = [];
 	workspaces: Workspace[] = [];
 
 	get stringify() {
 		return JSON.stringify({ favorites: this.favorites, workspaces: this.workspaces });
+	}
+
+	get workspacesNames() {
+		return this.workspaces.map(workspace => workspace.name);
+	}
+
+	get autoGenerateWorkspaceName() {
+		let i = 1;
+		let name = `workspace${i}`;
+
+		while (this.workspacesNames.includes(name)) {
+			name = `workspace${++i}`;
+		}
+
+		return name;
 	}
 
 	constructor(public readonly storagePath: string) {

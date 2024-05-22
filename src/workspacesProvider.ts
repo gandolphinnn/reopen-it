@@ -4,7 +4,14 @@ import * as path from 'path';
 import { DataManager } from './dataManager';
 
 export class WorkspacesProvider implements vscode.TreeDataProvider<Workspace> {
+	private _onDidChangeTreeData = new vscode.EventEmitter<Workspace | undefined | null | void>();
+	readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
+
 	constructor(private dataManager: DataManager) {}
+	
+	refresh(): void {
+		this._onDidChangeTreeData.fire();
+	}
 
 	getTreeItem(element: Workspace): vscode.TreeItem {
 		return element;

@@ -43,14 +43,24 @@
 				"command": "reopen-it.openWorkspace",
 				"category": "Reopen It",
 				"title": "Open workspace"
+			},
+			{
+				"command": "reopen-it.refreshTree",
+				"category": "Reopen It",
+				"title": "Refresh TreeView",
+				"icon":
+				{
+					"dark": "resources/refresh.svg",
+					"light": "resources/refresh.svg"
+				}
 			}
 		],
 		"viewsContainers": {
 			"activitybar": [
 				{
-				"id": "reopenIt-tree",
-				"title": "Reopen It",
-				"icon": "resources/icon.svg"
+					"id": "reopenIt-tree",
+					"title": "Reopen It",
+					"icon": "resources/icon.svg"
 				}
 			]
 		},
@@ -65,6 +75,15 @@
 					"type": "tree",
 					"id": "reopenIt-workspaces",
 					"name": "Workspaces"
+				}
+			]
+		},
+		"menus": {
+			"view/title": [
+				{
+					"command": "reopen-it.refreshTree",
+					"when": "view == reopenIt-tree",
+					"group": "navigation"
 				}
 			]
 		}
