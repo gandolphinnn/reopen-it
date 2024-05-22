@@ -20,9 +20,29 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "reopen-it.toggleFavourite",
+				"command": "reopen-it.refreshTree",
 				"category": "Reopen It",
-				"title": "Add/remove from favourites"
+				"title": "Refresh TreeView",
+				"icon":
+				{
+					"dark": "resources/refresh.svg",
+					"light": "resources/refresh.svg"
+				}
+			},
+			{
+				"command": "reopen-it.addFavourite",
+				"category": "Reopen It",
+				"title": "Add to favourites"
+			},
+			{
+				"command": "reopen-it.removeFavourite",
+				"category": "Reopen It",
+				"title": "Remove from favourites",
+				"icon":
+				{
+					"dark": "resources/trash.svg",
+					"light": "resources/trash.svg"
+				}
 			},
 			{
 				"command": "reopen-it.saveWorkspace",
@@ -43,16 +63,6 @@
 				"command": "reopen-it.openWorkspace",
 				"category": "Reopen It",
 				"title": "Open workspace"
-			},
-			{
-				"command": "reopen-it.refreshTree",
-				"category": "Reopen It",
-				"title": "Refresh TreeView",
-				"icon":
-				{
-					"dark": "resources/refresh.svg",
-					"light": "resources/refresh.svg"
-				}
 			}
 		],
 		"viewsContainers": {
@@ -79,10 +89,32 @@
 			]
 		},
 		"menus": {
-			"view/title": [
+			"commandPalette": [
 				{
 					"command": "reopen-it.refreshTree",
-					"when": "view == reopenIt-tree",
+					"when": "false"
+				},
+				{
+					"command": "reopen-it.addFavourite",
+					"when": "true"
+				},
+				{
+					"command": "reopen-it.removeFavourite",
+					"when": "true"
+				}
+			],
+			"editor/title/context": [
+				{
+					"command": "reopen-it.addFavourite"
+				},
+				{
+					"command": "reopen-it.removeFavourite"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "reopen-it.removeFavourite",
+					"when": "view == reopenIt-favourites",
 					"group": "navigation"
 				}
 			]

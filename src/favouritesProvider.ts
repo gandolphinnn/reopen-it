@@ -33,9 +33,8 @@ export class FavouritesProvider implements vscode.TreeDataProvider<Favourite> {
 	}
 }
 
-class Favourite extends vscode.TreeItem {
+export class Favourite extends vscode.TreeItem {
 	name: string;
-	
 
 	get exists() {
 		return fs.existsSync(this.filePath);

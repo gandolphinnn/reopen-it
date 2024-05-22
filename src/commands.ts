@@ -1,5 +1,7 @@
 import * as vscode from 'vscode';
 import { DataManager, Workspace } from './dataManager';
+import { Favourite, FavouritesProvider } from './favouritesProvider';
+import { WorkspacesProvider } from './workspacesProvider';
 
 export type CommandCallback = (...args: any[]) => any;
 
@@ -52,22 +54,39 @@ export type CommandCallback = (...args: any[]) => any;
 export class CommandManager {
 	static dataManager: DataManager;
 
-	static addFavourite: CommandCallback = (docPath = vscode.window.activeTextEditor!.document.fileName) => {
-		vscode.window.showInformationMessage(`Add ${docPath} to favourites`);
-		this.dataManager.addFavourite(docPath);
+//#region Tree
+	static favouritesProvider: FavouritesProvider;
+	static workspacesProvider: WorkspacesProvider;
+	static refreshTree: CommandCallback = () => {
+		this.favouritesProvider.refresh();
+		this.workspacesProvider.refresh();
 	};
+//#endregion Tree
 
-	static removeFavourite: CommandCallback = (docPath = vscode.window.activeTextEditor!.document.fileName) => {
-		vscode.window.showInformationMessage(`Remove ${docPath} from favourites`);
-		this.dataManager.removeFavourite(docPath);
+//#region Favourites
+	//? Favourite's icon is an HEART, not a star
+	/**
+	 * Called from: "editor/title/context"
+	 * @param item 
+	 */
+	static addFavourite: CommandCallback = (item: any) => {
+		vscode.window.showInformationMessage(`Add ${item.path} to favourites`);
+		this.dataManager.addFavourite(item.path);
+		this.refreshTree();
 	};
 	
-	static toggleFavourite: CommandCallback = (docPath = vscode.window.activeTextEditor!.document.fileName) => {
-		this.dataManager.addFavourite(docPath) && vscode.window.showInformationMessage(`Add ${docPath} to favourites`)
-		||
-		this.dataManager.removeFavourite(docPath) && vscode.window.showInformationMessage(`Remove ${docPath} from favourites`);
+	/**
+	 * Called from: "editor/title/context", "view/item/context"
+	 * @param item 
+	 */
+	static removeFavourite: CommandCallback = (item: Favourite) => {
+		vscode.window.showInformationMessage(`Remove ${item.filePath} from favourites`);
+		this.dataManager.removeFavourite(item.filePath);
+		this.refreshTree();
 	};
-	//
+//#endregion Favourites
+
+//#region Workspaces
 	static saveWorkspace: CommandCallback = (workspaceName: string = "") => {
 		const titledDocs = vscode.workspace.textDocuments.filter(doc => !doc.isUntitled);
 		if (workspaceName === "") {
@@ -82,14 +101,20 @@ export class CommandManager {
 			folder: "folder" //TODO how to get this data
 		});
 	};
+	
 	static saveWorkspaceAs: CommandCallback = () => {
 		vscode.window.showInputBox( { prompt: "Workspace name"} ).then( workspaceName => this.saveWorkspace(workspaceName));
 	};
+
 	static saveCloseWorkspace: CommandCallback = () => {
 		this.saveWorkspace();
 		vscode.commands.executeCommand("workbench.action.closeAllEditors"); //TODO check if this works
 	};
+
 	static openWorkspace: CommandCallback = (workspaceName: string = "") => { //TODO check if this works
+		if (this.dataManager.workspacesNames.length === 0) {
+			vscode.window.showErrorMessage("No workspaces saved");
+		}
 		const openWorkspaceCB = (workspaceName: string) => {
 			const workspace = this.dataManager.workspaces.find(w => w.name === workspaceName);
 			if (workspace) {
@@ -109,4 +134,5 @@ export class CommandManager {
 			openWorkspaceCB(workspaceName);
 		}
 	};
+	//#endregion Workspaces
 }
