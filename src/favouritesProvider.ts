@@ -57,5 +57,10 @@ export class Favourite extends vscode.TreeItem {
 		this.name = name;
 		this.tooltip = filePath;
 		this.iconPath = this.iconConditionalPath;
+		this.command = {
+			command: 'reopen-it.openFavourite',
+			title: 'Open Favourite',
+			arguments: [this],
+		};
 	}
 }

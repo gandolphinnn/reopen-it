@@ -4,11 +4,13 @@ import { CommandManager } from './commands';
 import { DataManager } from './dataManager';
 import { FavouritesProvider } from './favouritesProvider';
 import { WorkspacesProvider } from './workspacesProvider';
+import { ConfigsManager } from './configsManager';
 
 export function activate(context: vscode.ExtensionContext) {
 
 	//const dataPath = path.join(context.globalStorageUri.fsPath);
 	const dataPath = path.join(__filename, '..', '..');
+	ConfigsManager.load();
 
 	const dataManager = new DataManager(dataPath);
 	const favouritesProvider = new FavouritesProvider(dataManager);
@@ -17,6 +19,12 @@ export function activate(context: vscode.ExtensionContext) {
 	CommandManager.dataManager = dataManager;
 	CommandManager.favouritesProvider = favouritesProvider;
 	CommandManager.workspacesProvider = workspacesProvider;
+
+//#region Configurations
+	context.subscriptions.push(
+		vscode.workspace.onDidChangeConfiguration(e => ConfigsManager.refresh(e))
+	);
+//#endregion Configurations
 
 //#region Tree
 	vscode.window.registerTreeDataProvider('reopenIt-favourites', favouritesProvider);
@@ -31,6 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand('reopen-it.addFavourite',		CommandManager.addFavourite),
 		vscode.commands.registerCommand('reopen-it.removeFavourite',	CommandManager.removeFavourite),
+		vscode.commands.registerCommand('reopen-it.openFavourite',		CommandManager.openFavourite),
 	);
 //#endregion Favourites
 	

@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { DataManager, Workspace } from './dataManager';
 import { Favourite, FavouritesProvider } from './favouritesProvider';
 import { WorkspacesProvider } from './workspacesProvider';
+import { ConfigsManager } from './configsManager';
 
 export type CommandCallback = (...args: any[]) => any;
 
@@ -70,7 +71,6 @@ export class CommandManager {
 	 * @param item 
 	 */
 	static addFavourite: CommandCallback = (item: any) => {
-		vscode.window.showInformationMessage(`Add ${item.path} to favourites`);
 		this.dataManager.addFavourite(item.path);
 		this.refreshTree();
 	};
@@ -80,9 +80,16 @@ export class CommandManager {
 	 * @param item 
 	 */
 	static removeFavourite: CommandCallback = (item: Favourite) => {
-		vscode.window.showInformationMessage(`Remove ${item.filePath} from favourites`);
 		this.dataManager.removeFavourite(item.filePath);
 		this.refreshTree();
+	};
+
+	/**
+	 * Called from: "view/item/context"
+	 * @param item 
+	 */
+	static openFavourite: CommandCallback = (item: Favourite) => {
+		item.exists? vscode.window.showTextDocument(vscode.Uri.file(item.filePath), {preview: ConfigsManager.openFavouriteInPreview}) : null;
 	};
 //#endregion Favourites
 

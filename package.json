@@ -45,6 +45,11 @@
 				}
 			},
 			{
+				"command": "reopen-it.openFavourite",
+				"category": "Reopen It",
+				"title": "Open favourite"
+			},
+			{
 				"command": "reopen-it.saveWorkspace",
 				"category": "Reopen It",
 				"title": "Save workspace"
@@ -63,6 +68,20 @@
 				"command": "reopen-it.openWorkspace",
 				"category": "Reopen It",
 				"title": "Open workspace"
+			}
+		],
+		"configuration": [
+			{
+				"title": "Reopen It",
+				"order": 1,
+				"type": "object",
+				"properties": {
+					"reopen-it.openFavouriteInPreview": {
+						"default": true,
+						"description": "Open favourite in preview mode",
+						"type": "boolean"
+					}
+				}
 			}
 		],
 		"viewsContainers": {
@@ -101,6 +120,10 @@
 				{
 					"command": "reopen-it.removeFavourite",
 					"when": "true"
+				},
+				{
+					"command": "reopen-it.openFavourite",
+					"when": "false"
 				}
 			],
 			"editor/title/context": [
@@ -114,6 +137,11 @@
 			"view/item/context": [
 				{
 					"command": "reopen-it.removeFavourite",
+					"when": "view == reopenIt-favourites",
+					"group": "navigation"
+				},
+				{
+					"command": "reopen-it.openFavourite",
 					"when": "view == reopenIt-favourites",
 					"group": "navigation"
 				}
