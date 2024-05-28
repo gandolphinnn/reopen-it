@@ -33,6 +33,9 @@ export class FavouritesProvider implements vscode.TreeDataProvider<Favourite> {
 	}
 }
 
+const existingFilePath = path.join(__filename, '..', '..', 'resources', 'check.svg');
+const missingFilePath = path.join(__filename, '..', '..', 'resources', 'xmark.svg');
+
 export class Favourite extends vscode.TreeItem {
 	name: string;
 
@@ -40,8 +43,7 @@ export class Favourite extends vscode.TreeItem {
 		return fs.existsSync(this.filePath);
 	}
 	get iconConditionalPath() {
-		//TODO optimize this part with 2 const paths to choose
-		return this.displayIcon? path.join(__filename, '..', '..', 'resources', this.exists? 'file_exists.svg' : 'file_missing.svg') : '';
+		return this.displayIcon? this.exists? existingFilePath : missingFilePath : '';
 	}
 
 	constructor (
